@@ -1,0 +1,44 @@
+*****Make sure to download/install MySQL version 5.7*****
+
+create database city_lands
+
+use city_lands
+
+CREATE TABLE city_lands (
+ID INT,
+PIN TEXT,
+Address TEXT,
+Legal_Description TEXT,
+Property_Status VARCHAR(100),
+Date_of_Acquisition DATE,
+Date_of_Disposition DATE,
+Sq_Ft INT,
+Ward INT,
+Community_Area_Number INT,
+Community_Area_Name TEXT,
+Zoning_Classification TEXT,
+Zip_Code INT,
+Last_Update DATE,
+X_Coordinate FLOAT,
+Y_Coordinate FLOAT,
+Latitude FLOAT,
+Longitude FLOAT,
+Location TEXT,
+PRIMARY KEY (ID)
+);
+
+
+LOAD DATA LOCAL INFILE "C:\\Users\\moesa\\Desktop\\cs418-project-gold-team-rules\\City-Owned_Land_Inventory.tsv" INTO TABLE city_lands
+FIELDS TERMINATED BY '\t'
+LINES TERMINATED BY '\n'
+IGNORE 1 LINES
+(ID, PIN, Address, Legal_Description, Property_Status,@datevar, 
+@datevar1, Sq_Ft, Ward, Community_Area_Number, Community_Area_Name, 
+Zoning_Classification, Zip_Code, @datevar2, X_Coordinate, Y_Coordinate,
+Latitude,Longitude, Location) 
+SET Date_of_Acquisition=STR_TO_DATE(@datevar,'%m/%d/%Y'),
+Date_of_Disposition=STR_TO_DATE(@datevar1,'%m/%d/%Y'),
+Last_Update=STR_TO_DATE(@datevar2,'%m/%d/%Y');
+
+
+DATABASE FILE LOCATED HERE: C:\ProgramData\MySQL\MySQL Server 5.7\Data
